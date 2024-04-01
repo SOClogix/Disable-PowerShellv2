@@ -5,18 +5,18 @@ This script will disable the PowerShell v2 Engine on Windows 10/Server 2012/16/1
 
 .DESCRIPTION
 
-This script will disable the PowerShell v2 Engine on Windows 10/Server 2012/16/19/22, if any other version is detected no changes are made.
+This script will disable the PowerShell v2 Engine on Windows 10/11 and Server 12/16/19/22, if any other version is detected no changes are made.
 
 Disable-WindowsOptionalFeature does not work correctly when used as a startup script, so instead dism.exe is called directly in this
 script.
 
 Script flow:
 - Check the current OS version.
-    - If Windows 10/Server 12/16/19/22, PowerShell v2 will be disabled.
+    - If Windows 10/11 or Server 12/16/19/22, PowerShell v2 will be disabled.
         - If PowerShell v2 is already disabled, no changes will be made.
     - Any other OS, no changes will be made.
 
-Script log data saved to: C:\Windows\Logs\Disable-PSv2-Log.txt
+Script log data saved to: C:\Windows\Logs\Disable-PowerShellv2-Log.txt
 
 This script is designed to be deployed as a Group Policy Startup Script.
 Policy: Computer Configuration > Policies > Windows Settings > Scripts (Startup/Shutdown)
@@ -37,7 +37,7 @@ C:\PS> powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -Window
 #>
 
 # Start logging
-$DefaultLogLocation = "C:\Windows\Logs\Disable-PSv2-Log.txt"
+$DefaultLogLocation = "C:\Windows\Logs\Disable-PowerShellv2-Log.txt"
 Start-Transcript -Path $DefaultLogLocation
 
 # Get the current OS version
@@ -45,7 +45,7 @@ $OSVersion = (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\Curren
 # Disable PowerShell v2 based off the OS version
 switch -regex ($OSVersion) {  
     "(?i)10|2012|2016|2019|2022" {
-        Write-Host "Windows 10/Server 2012/16/19/22 detected."
+        Write-Host "Windows 10/11 or Server 12/16/19/22 detected."
         Write-Host "Checking to see if PowerShell v2 is currently enabled..."
         $PSv2PreCheck = dism.exe /Online /Get-Featureinfo /FeatureName:"MicrosoftWindowsPowerShellv2" | findstr "State"
         If ( $PSv2PreCheck -like "State : Enabled" ) {
