@@ -22,7 +22,7 @@ This script is designed to be deployed as a Group Policy Startup Script.
 
 ## Group Policy Instructions:
 Policy: Computer Configuration > Policies > Windows Settings > Scripts (Startup/Shutdown)\
-Script Name: Disable-PSv2.ps1\
+Script Name: Disable-PowerShellv2\
 Parameters: -ExecutionPolicy Bypass -NonInteractive -NoProfile
 
 ### More GPO Instruction:
