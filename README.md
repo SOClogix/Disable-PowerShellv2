@@ -35,10 +35,10 @@ C:\PS> powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -Window
 
 ## You can check whether Windows PowerShell 2.0 is installed/enabled by running the following in PowerShell (as an administrator):
 
-On Windows 7/8.1/10/11, the following will return a State as either Enabled or Disabled (Should work on Windows Server too):
+#### On Windows 7/8.1/10/11, the following will return a State as either Enabled or Disabled (Should work on Windows Server too):
 Get-WindowsOptionalFeature -Online -FeatureName MicrosoftWindowsPowerShellV2
 
-On Windows Server, the following will return an InstallState of either Installed or Removed:
+#### On Windows Server, the following will return an InstallState of either Installed or Removed:
 Get-WindowsFeature PowerShell-V2
 
 ## Sources:
